@@ -1,26 +1,37 @@
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.List;
 import java.util.Scanner;
 
 public class Window_main extends JFrame  {
     JPanel originImage, buttonsPanel, newImage;
     JButton searchFacebookProfile;
-//    public BufferedImage image;
+    public BufferedImage image;
     int ELEMENT_WIDTH=100;
     int ELEMENT_HEIGHT=50;
+    ImageIcon myPicture;
+    JLabel picLabel;
+    ChromeDriver driver ;
+
 
     Window_main() throws IOException {
 
 //        ImageIcon myPicture = new ImageIcon("profilePic.jpg");
-        ImageIcon myPicture = new ImageIcon("profilePic.jpg");
-        JLabel picLabel = new JLabel(myPicture);
 
 
-        picLabel.setVisible(true);
+
+
+
 
         JLabel enterProfile= new JLabel("ENTER PROFILE");
         JLabel originImageText= new JLabel("Original Image");
@@ -51,7 +62,7 @@ public class Window_main extends JFrame  {
         originImage.setLayout(null);
         originImage.add(originImageText).setBounds((originImage.getWidth()-ELEMENT_WIDTH)/2,10,ELEMENT_WIDTH,ELEMENT_HEIGHT);
 
-        originImage.add(picLabel).setBounds((originImage.getWidth()-myPicture.getIconWidth())/2,150,myPicture.getIconWidth(),myPicture.getIconHeight());
+//        originImage.add(picLabel).setBounds((originImage.getWidth()-myPicture.getIconWidth())/2,150,myPicture.getIconWidth(),myPicture.getIconHeight());
 
         buttonsPanel= new JPanel();
         buttonsPanel.setBounds(300,0,300,900);
@@ -68,6 +79,16 @@ public class Window_main extends JFrame  {
         newImage.setBackground(Color.GREEN);
         newImage.setVisible(true);
         newImage.setLayout(null);
+
+        searchFacebookProfile.addActionListener( (event) -> {
+            String profileName = textField.getText();
+            try {
+               downloadImage(profileName);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
 
 
 
@@ -89,15 +110,43 @@ public class Window_main extends JFrame  {
 //        } catch (IOException ex) {
 //            // handle exception...
 //        }
-        if (enter1())
-            addButtons();
+
 
 
 
 
     }
+    public void downloadImage(String profileName) throws IOException {
+
+
+        driver = new ChromeDriver();
+        driver.get("https://facebook.com/"+profileName);
+        // find the element of the profile photo and store it in folder PC - optional - I guss there is another ways
+
+        List<WebElement> elements = driver.findElements(By.tagName("img"));
+        //צריך לשנות לתמונה הזו
+//        List<WebElement> elements = driver.findElements(By.xpath("//div[@class='b3onmgus e5nlhep0 ph5uu5jm ecm0bbzt spb7xbtv bkmhp75w emlxlaya s45kfl79 cwj9ozl2']//div[@class='q9uorilb l9j0dhe7 pzggbiyp du4w35lb']//*[name()='svg']//*[name()='g' and contains(@mask,'url(#jsc_c')]//*[name()='image' and contains(@x,'0')]"));
+
+        for(WebElement element: elements){
+            String s = element.getAttribute("data-imgperflogname");
+            if (s!= null) {
+                String src = element.getAttribute("src");
+                URL imageUrl = new URL(src);
+                image = ImageIO.read(imageUrl);
+                File file = new File("C:\\files2\\profilePic.jpg");
+                ImageIO.write(image, "jpg", file);
+            }
+        }
+        if (enter1())
+//           textField.setVisible(false);
+            addButtons();
+
+    }
     public void addButtons(){
+        myPicture = new ImageIcon("C:\\files2\\profilePic.jpg");
+        picLabel = new JLabel(myPicture);
         //אפשר לעשות מערך של כפתורים במקום
+        originImage.add(picLabel).setBounds((originImage.getWidth()-myPicture.getIconWidth())/2,150,myPicture.getIconWidth(),myPicture.getIconHeight());
 
         JButton button1= new JButton("Grayscale");
         JButton button2= new JButton("Color Shift Right");
@@ -136,6 +185,10 @@ public class Window_main extends JFrame  {
 
 
     public static void main(String[] args) throws Exception {
+        System.setProperty(
+                "webdriver.chrome.driver",
+                "C:\\files2\\chromedriver.exe");
+
         // יצירת חלון משחק חדש
         new Window_main();
     }
