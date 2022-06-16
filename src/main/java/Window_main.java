@@ -7,41 +7,55 @@ import java.io.IOException;
 
 public class Window_main extends JFrame  {
     JPanel originImage, buttonsPanel, newImage;
-    public BufferedImage image;
+//    public BufferedImage image;
+    int ELEMENT_WIDTH=100;
+    int ELEMENT_HEIGHT=50;
+
     Window_main() throws IOException {
 
         ImageIcon myPicture = new ImageIcon("profilePic.jpg");
         JLabel picLabel = new JLabel(myPicture);
-        picLabel.setBounds(10,10,100,100);
+//        picLabel.setBounds(10,10,100,100);
+
         picLabel.setVisible(true);
 
-        JButton button= new JButton("send");
-        button.setSize(100,50);
-        button.setVisible(true);
+        JLabel enterProfile= new JLabel("ENTER PROFILE");
+        enterProfile.setVisible(true);
+
 
         JTextField textField=new JTextField();
         textField.setBackground(Color.cyan);
-        textField.setBounds(button.getX(),button.getY()+button.getHeight(),200,50);
         textField.setVisible(true);
+
+        JButton button= new JButton("send");
+        button.setVisible(true);
+
+
 
 
         originImage= new JPanel();
         originImage.setBounds(0,0,300,900);
         originImage.setBackground(Color.orange);
         originImage.setVisible(true);
-        originImage.add(picLabel);
+        originImage.setLayout(null);
+
+        originImage.add(picLabel).setBounds((originImage.getWidth()-myPicture.getIconWidth())/2,150,myPicture.getIconWidth(),myPicture.getIconHeight());
 
         buttonsPanel= new JPanel();
         buttonsPanel.setBounds(300,0,300,900);
         buttonsPanel.setBackground(Color.LIGHT_GRAY);
         buttonsPanel.setVisible(true);
-        buttonsPanel.add(button).setLocation(50,50);
-        buttonsPanel.add(textField);
+        buttonsPanel.setLayout(null);
+        buttonsPanel.add(enterProfile).setBounds((buttonsPanel.getWidth()-ELEMENT_WIDTH)/2,10,ELEMENT_WIDTH,ELEMENT_HEIGHT);
+        buttonsPanel.add(textField).setBounds(enterProfile.getX(),enterProfile.getY()+ELEMENT_HEIGHT,ELEMENT_WIDTH,ELEMENT_HEIGHT);
+        buttonsPanel.add(button).setBounds(textField.getX(),textField.getY()+ELEMENT_HEIGHT,ELEMENT_WIDTH,ELEMENT_HEIGHT);
+
 
         newImage= new JPanel();
         newImage.setBounds(600,0,300,900);
         newImage.setBackground(Color.GREEN);
         newImage.setVisible(true);
+
 //        // הגדרת חלון בסיסית
         this.add(originImage);
         this.add(buttonsPanel);
@@ -66,13 +80,6 @@ public class Window_main extends JFrame  {
 
 
 
-    }
-    public void addComponent(Component component, int x, int y, int width, int height, Font font) {
-        //פקודת יישור מימין לשמאל,ויזואלית יפה יותר ל"הוסף מספר" אבל עובדת גם בתיבות טקסט...
-//        component.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
-        component.setBounds(x, y, width, height);
-        component.setFont(font);
-        this.add(component);
     }
 
 
