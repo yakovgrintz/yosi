@@ -12,15 +12,17 @@ public class Window_main extends JFrame  {
 //    public BufferedImage image;
     int ELEMENT_WIDTH=100;
     int ELEMENT_HEIGHT=50;
+    ImageIcon myPicture = new ImageIcon("profilePic.jpg");
+    JLabel picLabel = new JLabel(myPicture);
 
     Window_main() throws IOException {
 
 //        ImageIcon myPicture = new ImageIcon("profilePic.jpg");
-        ImageIcon myPicture = new ImageIcon("profilePic.jpg");
-        JLabel picLabel = new JLabel(myPicture);
 
 
-        picLabel.setVisible(true);
+
+
+
 
         JLabel enterProfile= new JLabel("ENTER PROFILE");
         JLabel originImageText= new JLabel("Original Image");
@@ -51,7 +53,7 @@ public class Window_main extends JFrame  {
         originImage.setLayout(null);
         originImage.add(originImageText).setBounds((originImage.getWidth()-ELEMENT_WIDTH)/2,10,ELEMENT_WIDTH,ELEMENT_HEIGHT);
 
-        originImage.add(picLabel).setBounds((originImage.getWidth()-myPicture.getIconWidth())/2,150,myPicture.getIconWidth(),myPicture.getIconHeight());
+//        originImage.add(picLabel).setBounds((originImage.getWidth()-myPicture.getIconWidth())/2,150,myPicture.getIconWidth(),myPicture.getIconHeight());
 
         buttonsPanel= new JPanel();
         buttonsPanel.setBounds(300,0,300,900);
@@ -90,6 +92,7 @@ public class Window_main extends JFrame  {
 //            // handle exception...
 //        }
         if (enter1())
+//           textField.setVisible(false);
             addButtons();
 
 
@@ -98,6 +101,7 @@ public class Window_main extends JFrame  {
     }
     public void addButtons(){
         //אפשר לעשות מערך של כפתורים במקום
+        originImage.add(picLabel).setBounds((originImage.getWidth()-myPicture.getIconWidth())/2,150,myPicture.getIconWidth(),myPicture.getIconHeight());
 
         JButton button1= new JButton("Grayscale");
         JButton button2= new JButton("Color Shift Right");
