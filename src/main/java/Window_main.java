@@ -19,7 +19,7 @@ public class Window_main extends JFrame  {
 
     JButton searchFacebookProfile,tryButton;
     public BufferedImage image;
-    int ELEMENT_WIDTH=100;
+    int ELEMENT_WIDTH=150;
     int ELEMENT_HEIGHT=50;
     static ImageIcon myPicture,copyOfPicture;
     static JLabel picLabel,picLabel2;
@@ -27,7 +27,7 @@ public class Window_main extends JFrame  {
     static BufferedImage scanImage, scanImage2;
 
 
-    Window_main() throws IOException {
+    Window_main()  {
 
 
 
@@ -184,6 +184,7 @@ public class Window_main extends JFrame  {
         copyOfPicture= new ImageIcon(scanImage2);
         picLabel = new JLabel(myPicture);
         picLabel2=new JLabel(copyOfPicture);
+        newImagePanel.removeAll();
         //אפשר לעשות מערך של כפתורים במקום
         originImagePanel.add(picLabel).setBounds((originImagePanel.getWidth()-myPicture.getIconWidth())/2,150,myPicture.getIconWidth(),myPicture.getIconHeight());
         originImagePanel.revalidate();
@@ -208,7 +209,8 @@ public class Window_main extends JFrame  {
                 //זה קורא לפונקציה אבל נופל שם בסוף בתהליך כתיבת הקובץ
 //                Actions.grey(imgToTest);
 //                Actions.grayScale(imgToTest);
-                Actions.Grayscale(scanImage2);
+//                Actions.Grayscale(scanImage2);
+                  Actions.Grayscale(scanImage2);
 
             } catch (Exception e) {
                 System.out.println("nothing");
@@ -217,11 +219,50 @@ public class Window_main extends JFrame  {
         JButton button2= new JButton("Color Shift Right");
         JButton button3= new JButton("Color Shift Left");
         JButton button4= new JButton("Mirror");
+        button4.addActionListener( (event) -> {
+
+            try {
+                //זה קורא לפונקציה אבל נופל שם בסוף בתהליך כתיבת הקובץ
+//                Actions.grey(imgToTest);
+//                Actions.grayScale(imgToTest);
+//                Actions.Grayscale(scanImage2);
+                Actions.mirror(scanImage2);
+
+            } catch (Exception e) {
+                System.out.println("nothing");
+            }
+        });
         JButton button5= new JButton("Show Borders");
         JButton button6= new JButton("Eliminate Red/Green/Blue");
         JButton button7= new JButton("Negative");
+        button7.addActionListener( (event) -> {
+
+            try {
+                //זה קורא לפונקציה אבל נופל שם בסוף בתהליך כתיבת הקובץ
+//                Actions.grey(imgToTest);
+//                Actions.grayScale(imgToTest);
+//                Actions.Grayscale(scanImage2);
+                Actions.negative(scanImage2);
+
+            } catch (Exception e) {
+                System.out.println("nothing");
+            }
+        });
         JButton button8= new JButton("Contract");
         JButton button9= new JButton("Sepia");
+        button9.addActionListener( (event) -> {
+
+            try {
+                //זה קורא לפונקציה אבל נופל שם בסוף בתהליך כתיבת הקובץ
+//                Actions.grey(imgToTest);
+//                Actions.grayScale(imgToTest);
+//                Actions.Grayscale(scanImage2);
+                Actions.sepia(scanImage2);
+
+            } catch (Exception e) {
+                System.out.println("nothing");
+            }
+        });
         JButton button10= new JButton("Ligher");
         JButton button11= new JButton("Darker");
         buttonsPanel.add(button1).setBounds(searchFacebookProfile.getX(),searchFacebookProfile.getY()+ELEMENT_HEIGHT,ELEMENT_WIDTH,ELEMENT_HEIGHT);
@@ -284,7 +325,7 @@ public class Window_main extends JFrame  {
 //}
     public static void updatePhoto(){
         newImagePanel.removeAll();
-        ImageIcon copyOfPicture2= new ImageIcon("C:\\files2\\027.jpg");
+//        ImageIcon copyOfPicture2= new ImageIcon("C:\\files2\\027.jpg");
         JLabel picLabel3=new JLabel(new ImageIcon( scanImage2));
 
 
