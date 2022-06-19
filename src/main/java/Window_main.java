@@ -8,27 +8,25 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.List;
 import java.util.Scanner;
 
 public class Window_main extends JFrame  {
-    final int SCREEN_WIDTH=900;
-    final int SCREEN_HEIGHT=900;
-
-    static JPanel originImagePanel, buttonsPanel, newImagePanel;
-
-    JButton searchFacebookProfile,tryButton;
+    JPanel originImage, buttonsPanel, newImage;
+    JButton searchFacebookProfile;
     public BufferedImage image;
     int ELEMENT_WIDTH=100;
     int ELEMENT_HEIGHT=50;
-    static ImageIcon myPicture,copyOfPicture;
-    static JLabel picLabel,picLabel2;
+    ImageIcon myPicture;
+    JLabel picLabel;
     ChromeDriver driver ;
-    static BufferedImage scanImage, scanImage2;
 
 
     Window_main() throws IOException {
 
+//        ImageIcon myPicture = new ImageIcon("profilePic.jpg");
 
 
 
@@ -57,17 +55,17 @@ public class Window_main extends JFrame  {
 
 
 
-        originImagePanel = new JPanel();
-        originImagePanel.setBounds(0,0,SCREEN_WIDTH/3,SCREEN_HEIGHT);
-        originImagePanel.setBackground(Color.orange);
-        originImagePanel.setVisible(true);
-        originImagePanel.setLayout(null);
-        originImagePanel.add(originImageText).setBounds((originImagePanel.getWidth()-ELEMENT_WIDTH)/2,10,ELEMENT_WIDTH,ELEMENT_HEIGHT);
+        originImage= new JPanel();
+        originImage.setBounds(0,0,300,900);
+        originImage.setBackground(Color.orange);
+        originImage.setVisible(true);
+        originImage.setLayout(null);
+        originImage.add(originImageText).setBounds((originImage.getWidth()-ELEMENT_WIDTH)/2,10,ELEMENT_WIDTH,ELEMENT_HEIGHT);
 
-//        originImagePanel.add(picLabel).setBounds((originImagePanel.getWidth()-myPicture.getIconWidth())/2,150,myPicture.getIconWidth(),myPicture.getIconHeight());
+//        originImage.add(picLabel).setBounds((originImage.getWidth()-myPicture.getIconWidth())/2,150,myPicture.getIconWidth(),myPicture.getIconHeight());
 
         buttonsPanel= new JPanel();
-        buttonsPanel.setBounds(originImagePanel.getX()+originImagePanel.getWidth(),0,SCREEN_WIDTH/3,SCREEN_HEIGHT);
+        buttonsPanel.setBounds(300,0,300,900);
         buttonsPanel.setBackground(Color.LIGHT_GRAY);
         buttonsPanel.setVisible(true);
         buttonsPanel.setLayout(null);
@@ -75,31 +73,17 @@ public class Window_main extends JFrame  {
         buttonsPanel.add(textField).setBounds(enterProfile.getX(),enterProfile.getY()+ELEMENT_HEIGHT,ELEMENT_WIDTH,ELEMENT_HEIGHT);
         buttonsPanel.add(searchFacebookProfile).setBounds(textField.getX(),textField.getY()+ELEMENT_HEIGHT,ELEMENT_WIDTH,ELEMENT_HEIGHT);
 
-        tryButton= new JButton("TRY");
-        tryButton.setBackground(new Color(3,168,36));
 
-
-        newImagePanel = new JPanel();
-        newImagePanel.setBounds(buttonsPanel.getX()+buttonsPanel.getWidth(),0,SCREEN_WIDTH/3,SCREEN_HEIGHT);
-        newImagePanel.setBackground(Color.GREEN);
-        newImagePanel.setVisible(true);
-        newImagePanel.setLayout(null);
-        newImagePanel.add(newImageText).setBounds((newImagePanel.getWidth()-ELEMENT_WIDTH)/2,10,ELEMENT_WIDTH,ELEMENT_HEIGHT);
-        this.add(newImagePanel).setBounds(600,0,300,900);
-        this.add(buttonsPanel).setBounds(300,0,300,900);
-
-        this.add(originImagePanel).setBounds(0,0,300,900);
-//        originImagePanel.add(tryButton).setBounds((originImagePanel.getWidth()-ELEMENT_WIDTH)/2,500,ELEMENT_WIDTH,ELEMENT_HEIGHT);
-
-
-
-
+        newImage= new JPanel();
+        newImage.setBounds(600,0,300,900);
+        newImage.setBackground(Color.GREEN);
+        newImage.setVisible(true);
+        newImage.setLayout(null);
 
         searchFacebookProfile.addActionListener( (event) -> {
             String profileName = textField.getText();
             try {
                downloadImage(profileName);
-
 
             } catch (IOException e) {
                 e.printStackTrace();
@@ -109,16 +93,14 @@ public class Window_main extends JFrame  {
 
 
 //        // הגדרת חלון בסיסית
-
-
-
-
+        this.add(originImage);
+        this.add(buttonsPanel);
+        this.add(newImage);
         this.setTitle("IMAGE PROCCESSING");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setResizable(false);
         //פונקצייה מובנית הבונה את גודל החלון בהתאם לגודל הפנלים
         this.setSize(900,900);
-        this.setLayout(null);
         //נראות ומיקום החלון
         this.setVisible(true);
         this.setLocationRelativeTo(null);
@@ -136,84 +118,37 @@ public class Window_main extends JFrame  {
     }
     public void downloadImage(String profileName) throws IOException {
 
-        originImagePanel.removeAll();
+
         driver = new ChromeDriver();
         driver.get("https://facebook.com/"+profileName);
         // find the element of the profile photo and store it in folder PC - optional - I guss there is another ways
 
-//        List<WebElement> elements = driver.findElements(By.tagName("img"));
-//        //צריך לשנות לתמונה הזו
-////        List<WebElement> elements = driver.findElements(By.xpath("//div[@class='b3onmgus e5nlhep0 ph5uu5jm ecm0bbzt spb7xbtv bkmhp75w emlxlaya s45kfl79 cwj9ozl2']//div[@class='q9uorilb l9j0dhe7 pzggbiyp du4w35lb']//*[name()='svg']//*[name()='g' and contains(@mask,'url(#jsc_c')]//*[name()='image' and contains(@x,'0')]"));
-//
-//        for(WebElement element: elements){
-//            String s = element.getAttribute("data-imgperflogname");
-//            if (s!= null) {
-//                String src = element.getAttribute("src");
-//                URL imageUrl = new URL(src);
-//                image = ImageIO.read(imageUrl);
-//                File file = new File("C:\\files2\\profilePic.jpg");
-//                ImageIO.write(image, "jpg", file);
-//                File copy= new File("C:\\files2\\profilePicCopy.jpg");
-//                ImageIO.write(image, "jpg", copy);
-//            }
-//        }
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        WebElement element = driver.findElement(By.xpath("//div[@class='b3onmgus e5nlhep0 ph5uu5jm ecm0bbzt spb7xbtv bkmhp75w emlxlaya s45kfl79 cwj9ozl2']//div[@class='q9uorilb l9j0dhe7 pzggbiyp du4w35lb']//*[name()='svg']//*[name()='g' and contains(@mask,'url(#jsc_c')]//*[name()='image' and contains(@x,'0')]"));
-        String src = element.getAttribute("xlink:href");
-        URL imageUrl = new URL(src);
-        scanImage = ImageIO.read(imageUrl);
-        scanImage2 = ImageIO.read(imageUrl);
-//        image = ImageIO.read(url);
-//        File file = new File("C:\\files2\\profilePic.jpg");
-//        ImageIO.write(scanImage, "jpg", file);
-        File copy= new File("C:\\files2\\profilePicCopy.jpg");
-        ImageIO.write(scanImage, "jpg", copy);
-//        if (enter1())
-//           textField.setVisible(false);
-        driver.quit();
+        List<WebElement> elements = driver.findElements(By.tagName("img"));
+        //צריך לשנות לתמונה הזו
+//        List<WebElement> elements = driver.findElements(By.xpath("//div[@class='b3onmgus e5nlhep0 ph5uu5jm ecm0bbzt spb7xbtv bkmhp75w emlxlaya s45kfl79 cwj9ozl2']//div[@class='q9uorilb l9j0dhe7 pzggbiyp du4w35lb']//*[name()='svg']//*[name()='g' and contains(@mask,'url(#jsc_c')]//*[name()='image' and contains(@x,'0')]"));
 
+        for(WebElement element: elements){
+            String s = element.getAttribute("data-imgperflogname");
+            if (s!= null) {
+                String src = element.getAttribute("src");
+                URL imageUrl = new URL(src);
+                image = ImageIO.read(imageUrl);
+                File file = new File("C:\\files2\\profilePic.jpg");
+                ImageIO.write(image, "jpg", file);
+            }
+        }
+        if (enter1())
+//           textField.setVisible(false);
             addButtons();
 
     }
-    public void addButtons() throws IOException {
-        myPicture = new ImageIcon(scanImage);
-        copyOfPicture= new ImageIcon(scanImage2);
+    public void addButtons(){
+        myPicture = new ImageIcon("C:\\files2\\profilePic.jpg");
         picLabel = new JLabel(myPicture);
-        picLabel2=new JLabel(copyOfPicture);
         //אפשר לעשות מערך של כפתורים במקום
-        originImagePanel.add(picLabel).setBounds((originImagePanel.getWidth()-myPicture.getIconWidth())/2,150,myPicture.getIconWidth(),myPicture.getIconHeight());
-        originImagePanel.revalidate();
-
-
-        newImagePanel.add(picLabel2).setBounds((newImagePanel.getWidth()-myPicture.getIconWidth())/2,150,myPicture.getIconWidth(),myPicture.getIconHeight());
-        newImagePanel.revalidate();
-
-        //שלושת השורות האלו זה רק נסיון ליצור BufferedImage מה copy כדי לשלוח לפונקציות
-        File test= new File("C:\\files2\\profilePicCopy.jpg");
-        BufferedImage imgToTest= ImageIO.read(test);
-        ImageIO.write(imgToTest, "jpg", test);
-
-
-
-
+        originImage.add(picLabel).setBounds((originImage.getWidth()-myPicture.getIconWidth())/2,150,myPicture.getIconWidth(),myPicture.getIconHeight());
 
         JButton button1= new JButton("Grayscale");
-        button1.addActionListener( (event) -> {
-
-            try {
-                //זה קורא לפונקציה אבל נופל שם בסוף בתהליך כתיבת הקובץ
-//                Actions.grey(imgToTest);
-//                Actions.grayScale(imgToTest);
-                Actions.Grayscale(scanImage2);
-
-            } catch (Exception e) {
-                System.out.println("nothing");
-            }
-        });
         JButton button2= new JButton("Color Shift Right");
         JButton button3= new JButton("Color Shift Left");
         JButton button4= new JButton("Mirror");
@@ -247,66 +182,6 @@ public class Window_main extends JFrame  {
         }
         return false;
     }
-//    public static void Grayscale(BufferedImage img){
-//        //get image width and height
-//        int width = img.getWidth();
-//        int height = img.getHeight();
-//
-//        //convert to grayscale
-//        for(int y = 0; y < height; y++){
-//            for(int x = 0; x < width; x++){
-//                int p = img.getRGB(x,y);
-//
-//                int a = (p>>24)&0xff;
-//                int r = (p>>16)&0xff;
-//                int g = (p>>8)&0xff;
-//                int b = p&0xff;
-//
-//                //calculate average
-//                int avg = (r+g+b)/3;
-//
-//                //replace RGB value with avg
-//                p = (a<<24) | (avg<<16) | (avg<<8) | avg;
-//
-//                img.setRGB(x, y, p);
-//            }
-//        }
-//
-//        try{
-//        File output =new File("C:\\files2\\027.png");
-//        ImageIO.write(img,"png",output);
-//        updatePhoto();
-//
-//
-//    } catch (IOException e) {
-//        e.printStackTrace();
-//    }
-//}
-  public static void updatePhoto(){
-        newImagePanel.removeAll();
-    ImageIcon copyOfPicture2= new ImageIcon("C:\\files2\\027.jpg");
-    JLabel picLabel3=new JLabel(new ImageIcon( scanImage2));
-
-
-
-      try{
-          newImagePanel.add(picLabel3).setBounds((newImagePanel.getWidth()-copyOfPicture.getIconWidth())/2,150,copyOfPicture.getIconWidth(),myPicture.getIconHeight());
-          newImagePanel.setLayout(null);
-          newImagePanel.revalidate();
-          picLabel3.setVisible(true);
-      }catch (Exception e){
-          System.out.println("dont add");
-      }
-
-
-
-
-
-
-
-  }
-
-
 
 
     public static void main(String[] args) throws Exception {
