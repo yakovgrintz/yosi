@@ -24,7 +24,7 @@ public class Window_main extends JFrame  {
     static ImageIcon myPicture,copyOfPicture;
     static JLabel picLabel,picLabel2;
     ChromeDriver driver ;
-    BufferedImage scanImage;
+    static BufferedImage scanImage, scanImage2;
 
 
     Window_main() throws IOException {
@@ -166,8 +166,10 @@ public class Window_main extends JFrame  {
         String src = element.getAttribute("xlink:href");
         URL imageUrl = new URL(src);
         scanImage = ImageIO.read(imageUrl);
-        File file = new File("C:\\files2\\profilePic.jpg");
-        ImageIO.write(scanImage, "jpg", file);
+        scanImage2 = ImageIO.read(imageUrl);
+//        image = ImageIO.read(url);
+//        File file = new File("C:\\files2\\profilePic.jpg");
+//        ImageIO.write(scanImage, "jpg", file);
         File copy= new File("C:\\files2\\profilePicCopy.jpg");
         ImageIO.write(scanImage, "jpg", copy);
 //        if (enter1())
@@ -178,13 +180,14 @@ public class Window_main extends JFrame  {
 
     }
     public void addButtons() throws IOException {
-        myPicture = new ImageIcon("C:\\files2\\profilePic.jpg");
-        copyOfPicture= new ImageIcon("C:\\files2\\profilePicCopy.jpg");
+        myPicture = new ImageIcon(scanImage);
+        copyOfPicture= new ImageIcon(scanImage2);
         picLabel = new JLabel(myPicture);
         picLabel2=new JLabel(copyOfPicture);
         //אפשר לעשות מערך של כפתורים במקום
         originImagePanel.add(picLabel).setBounds((originImagePanel.getWidth()-myPicture.getIconWidth())/2,150,myPicture.getIconWidth(),myPicture.getIconHeight());
         originImagePanel.revalidate();
+
 
         newImagePanel.add(picLabel2).setBounds((newImagePanel.getWidth()-myPicture.getIconWidth())/2,150,myPicture.getIconWidth(),myPicture.getIconHeight());
         newImagePanel.revalidate();
@@ -205,7 +208,7 @@ public class Window_main extends JFrame  {
                 //זה קורא לפונקציה אבל נופל שם בסוף בתהליך כתיבת הקובץ
 //                Actions.grey(imgToTest);
 //                Actions.grayScale(imgToTest);
-                   changeRGB(imgToTest);
+                Actions.Grayscale(scanImage2);
 
             } catch (Exception e) {
                 System.out.println("nothing");
@@ -244,49 +247,57 @@ public class Window_main extends JFrame  {
         }
         return false;
     }
-    public static void changeRGB(BufferedImage img){
-        //get image width and height
-        int width = img.getWidth();
-        int height = img.getHeight();
-
-        //convert to grayscale
-        for(int y = 0; y < height; y++){
-            for(int x = 0; x < width; x++){
-                int p = img.getRGB(x,y);
-
-                int a = (p>>24)&0xff;
-                int r = (p>>16)&0xff;
-                int g = (p>>8)&0xff;
-                int b = p&0xff;
-
-                //calculate average
-                int avg = (r+g+b)/3;
-
-                //replace RGB value with avg
-                p = (a<<24) | (avg<<16) | (avg<<8) | avg;
-
-                img.setRGB(x, y, p);
-            }
-        }
-
-        try{
-        File output =new File("C:\\files2\\027.png");
-        ImageIO.write(img,"png",output);
-        updatePhoto();
-
-
-    } catch (IOException e) {
-        e.printStackTrace();
-    }
-}
+//    public static void Grayscale(BufferedImage img){
+//        //get image width and height
+//        int width = img.getWidth();
+//        int height = img.getHeight();
+//
+//        //convert to grayscale
+//        for(int y = 0; y < height; y++){
+//            for(int x = 0; x < width; x++){
+//                int p = img.getRGB(x,y);
+//
+//                int a = (p>>24)&0xff;
+//                int r = (p>>16)&0xff;
+//                int g = (p>>8)&0xff;
+//                int b = p&0xff;
+//
+//                //calculate average
+//                int avg = (r+g+b)/3;
+//
+//                //replace RGB value with avg
+//                p = (a<<24) | (avg<<16) | (avg<<8) | avg;
+//
+//                img.setRGB(x, y, p);
+//            }
+//        }
+//
+//        try{
+//        File output =new File("C:\\files2\\027.png");
+//        ImageIO.write(img,"png",output);
+//        updatePhoto();
+//
+//
+//    } catch (IOException e) {
+//        e.printStackTrace();
+//    }
+//}
   public static void updatePhoto(){
-        newImagePanel.remove(picLabel2);
+        newImagePanel.removeAll();
     ImageIcon copyOfPicture2= new ImageIcon("C:\\files2\\027.jpg");
-    JLabel picLabel3=new JLabel(copyOfPicture2);
+    JLabel picLabel3=new JLabel(new ImageIcon( scanImage2));
 
 
-      newImagePanel.add(picLabel3).setBounds((newImagePanel.getWidth()-copyOfPicture.getIconWidth())/2,150,copyOfPicture.getIconWidth(),myPicture.getIconHeight());
-      newImagePanel.revalidate();
+
+      try{
+          newImagePanel.add(picLabel3).setBounds((newImagePanel.getWidth()-copyOfPicture.getIconWidth())/2,150,copyOfPicture.getIconWidth(),myPicture.getIconHeight());
+          newImagePanel.setLayout(null);
+          newImagePanel.revalidate();
+          picLabel3.setVisible(true);
+      }catch (Exception e){
+          System.out.println("dont add");
+      }
+
 
 
 
