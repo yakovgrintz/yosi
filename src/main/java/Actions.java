@@ -25,7 +25,7 @@ public class Actions  {
         }
         Window_main.updatePhoto();
     }
-    public static void ElimniateRed (BufferedImage img) throws Exception{
+    public static void EliminateRed (BufferedImage img) throws Exception{
         for (int x = 0; x< img.getWidth(); x++) {
             for (int y = 0; y < img.getHeight(); y++) {
                 int pixel = img.getRGB(x, y);
@@ -97,12 +97,8 @@ public class Actions  {
     //2.
     public static void mirror(BufferedImage img) throws Exception {
 
-
-
         int width = img.getWidth();
         int height = img.getHeight();
-
-
 
         // Create mirror image pixel by pixel
         for (int y = 0; y < height; y++) {
@@ -121,17 +117,24 @@ public class Actions  {
         }
         Window_main.updatePhoto();
 
-
 //                } catch (IOException e) {
 //                    e.printStackTrace();
 //                }
-
-
-
     }
 
     //3.
-
+    public static void  ShowBorders (BufferedImage img) throws Exception{
+        Color previous = null;
+        for (int x=0; x< img.getWidth(); x++) {
+            for (int y = 0; y< img.getHeight(); y++) {
+                Color curentcolor = new Color(img.getRGB(x,y));
+                if(previous!=null && !isSimilarColor(previous ,curentcolor))
+                    img.setRGB(x ,y ,Color.GREEN.getRGB());
+                previous=curentcolor;
+            }
+        }
+        Window_main.updatePhoto();
+    }
     public static void sepia(BufferedImage img) throws Exception{
         for (int y = 0; y < img.getHeight(); y++) {
             for (int x = 0; x < img.getWidth(); x++) {
@@ -221,8 +224,6 @@ public class Actions  {
             }
         }
 
-
-
         Window_main.updatePhoto();
     }
     //6.
@@ -256,9 +257,17 @@ public class Actions  {
             }
         }
 
-
-
         Window_main.updatePhoto();
+    }
+    public static boolean isSimilarColor (Color color1, Color color2){
+        boolean similar = false;
+        int redDiff = Math.abs(color1.getRed()-color2.getRed());
+        int greenDiff = Math.abs(color1.getGreen()-color2.getGreen());
+        int blueDiff = Math.abs(color1.getBlue()-color2.getBlue());
+        if (redDiff+greenDiff+blueDiff <40)
+            similar=true;
+
+        return  similar;
     }
     //פונקציה משלימה להבהרת או השחרת תמונה
     public static int Truncate(int value) {

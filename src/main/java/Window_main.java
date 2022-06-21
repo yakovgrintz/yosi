@@ -12,15 +12,15 @@ import java.net.URL;
 import java.util.Scanner;
 
 public class Window_main extends JFrame  {
-    final static int SCREEN_WIDTH=900;
-    final static int SCREEN_HEIGHT=800;
-    static int ELEMENT_WIDTH=150;
-    static int ELEMENT_HEIGHT=50;
+    final int SCREEN_WIDTH=900;
+    final int SCREEN_HEIGHT=800;
 
     static JPanel originImagePanel, buttonsPanel, newImagePanel;
 
     JButton searchFacebookProfile,tryButton;
     public BufferedImage image;
+    int ELEMENT_WIDTH=150;
+    int ELEMENT_HEIGHT=50;
     static ImageIcon myPicture,copyOfPicture;
     static JLabel picLabel,picLabel2;
     ChromeDriver driver ;
@@ -186,12 +186,22 @@ public class Window_main extends JFrame  {
             }
         });
         JButton button5= new JButton("Show Borders");
+        button5.addActionListener( (event) -> {
+
+            try {
+
+                Actions.ShowBorders(scanImage2);
+
+            } catch (Exception e) {
+                System.out.println("nothing");
+            }
+        });
         JButton button6= new JButton("Eliminate Red");
         button6.addActionListener( (event) -> {
 
             try {
 
-                Actions.ElimniateRed(scanImage2);
+                Actions.EliminateRed(scanImage2);
 
             } catch (Exception e) {
                 System.out.println("nothing");
@@ -283,7 +293,7 @@ public class Window_main extends JFrame  {
     public static void main(String[] args)  {
         System.setProperty(
                 "webdriver.chrome.driver",
-                "C:\\sel\\chromedriver.exe");
+                "C:\\files2\\chromedriver.exe");
 
         // יצירת חלון  חדש
         new Window_main();
