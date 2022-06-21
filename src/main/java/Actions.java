@@ -7,6 +7,24 @@ import javax.swing.*;
 
 public class Actions  {
 
+
+    //1.
+    public static void ColorShiftRight (BufferedImage img) throws Exception{
+        for (int x = 0; x< img.getWidth(); x++) {
+            for (int y = 0; y < img.getHeight(); y++) {
+                int pixel = img.getRGB(x, y);
+                Color color = new Color(pixel);
+
+                int red = color.getRed();
+                int green = color.getGreen();
+                int blue = color.getBlue();
+
+                Color newColor = new Color(green, blue,red);
+                img.setRGB(x, y, newColor.getRGB());
+            }
+        }
+        Window_main.updatePhoto();
+    }
     public static void ElimniateRed (BufferedImage img) throws Exception{
         for (int x = 0; x< img.getWidth(); x++) {
             for (int y = 0; y < img.getHeight(); y++) {
@@ -21,23 +39,8 @@ public class Actions  {
                 img.setRGB(x, y, newColor.getRGB());
             }
         }
+        Window_main.updatePhoto();
     }
-    //1.
-public static void ColorShiftRight (BufferedImage img) throws Exception{
-    for (int x = 0; x< img.getWidth(); x++) {
-        for (int y = 0; y < img.getHeight(); y++) {
-            int pixel = img.getRGB(x, y);
-            Color color = new Color(pixel);
-
-            int red = color.getRed();
-            int green = color.getGreen();
-            int blue = color.getBlue();
-
-            Color newColor = new Color(green, blue,red);
-            img.setRGB(x, y, newColor.getRGB());
-        }
-    }
-}
     public static void ColorShiftLeft (BufferedImage img) throws Exception{
         for (int x = 0; x< img.getWidth(); x++) {
             for (int y = 0; y < img.getHeight(); y++) {
@@ -52,6 +55,7 @@ public static void ColorShiftRight (BufferedImage img) throws Exception{
                 img.setRGB(x, y, newColor.getRGB());
             }
         }
+        Window_main.updatePhoto();
     }
 
     public static void Grayscale(BufferedImage img) throws Exception {
@@ -82,7 +86,7 @@ public static void ColorShiftRight (BufferedImage img) throws Exception{
 //        try {
 //            File output = new File("C:\\files2\\027.png");
 //            ImageIO.write(img, "png", output);
-            Window_main.updatePhoto();
+        Window_main.updatePhoto();
 
 
 //        } catch (IOException e) {
@@ -115,7 +119,7 @@ public static void ColorShiftRight (BufferedImage img) throws Exception{
                 img.setRGB(rx, y, p);
             }
         }
-                    Window_main.updatePhoto();
+        Window_main.updatePhoto();
 
 
 //                } catch (IOException e) {
@@ -124,7 +128,7 @@ public static void ColorShiftRight (BufferedImage img) throws Exception{
 
 
 
-        }
+    }
 
     //3.
 
@@ -268,5 +272,4 @@ public static void ColorShiftRight (BufferedImage img) throws Exception{
         return value;
     }
 }
-
 
