@@ -8,6 +8,9 @@ import javax.swing.*;
 public class Actions  {
 
 
+    //1.
+
+
     public static void Grayscale(BufferedImage img) throws Exception {
         //get image width and height
         int width = img.getWidth();
@@ -80,6 +83,8 @@ public class Actions  {
 
         }
 
+    //3.
+
     public static void sepia(BufferedImage img) throws Exception{
         for (int y = 0; y < img.getHeight(); y++) {
             for (int x = 0; x < img.getWidth(); x++) {
@@ -110,6 +115,9 @@ public class Actions  {
         }
         Window_main.updatePhoto();
     }
+
+    //4.
+
     public static void negative(BufferedImage img) throws Exception {
         int width = img.getWidth();
         int height = img.getHeight();
@@ -134,6 +142,87 @@ public class Actions  {
             }
         }
         Window_main.updatePhoto();
+    }
+    //5.
+    public static void lighter(BufferedImage img) throws Exception {
+        int rgb[];
+
+        // Setting custom brightness
+        int brightnessValue = 100;
+
+        // Outer loop for width of image
+        for (int i = 0; i < img.getWidth(); i++) {
+
+            // Inner loop for height of image
+            for (int j = 0; j < img.getHeight(); j++) {
+
+                rgb = img.getRaster().getPixel(
+                        i, j, new int[3]);
+
+                // Using(calling) method 1
+                int red
+                        = Truncate(rgb[0] + brightnessValue);
+                int green
+                        = Truncate(rgb[1] + brightnessValue);
+                int blue
+                        = Truncate(rgb[2] + brightnessValue);
+
+                int arr[] = { red, green, blue };
+
+                // Using setPixel() method
+                img.getRaster().setPixel(i, j, arr);
+            }
+        }
+
+
+
+        Window_main.updatePhoto();
+    }
+    //6.
+    public static void darker(BufferedImage img) throws Exception {
+        int rgb[];
+
+        // Setting custom brightness
+        int brightnessValue = 100;
+
+        // Outer loop for width of image
+        for (int i = 0; i < img.getWidth(); i++) {
+
+            // Inner loop for height of image
+            for (int j = 0; j < img.getHeight(); j++) {
+
+                rgb = img.getRaster().getPixel(
+                        i, j, new int[3]);
+
+                // Using(calling) method 1
+                int red
+                        = Truncate(rgb[0] - brightnessValue);
+                int green
+                        = Truncate(rgb[1] - brightnessValue);
+                int blue
+                        = Truncate(rgb[2] - brightnessValue);
+
+                int arr[] = { red, green, blue };
+
+                // Using setPixel() method
+                img.getRaster().setPixel(i, j, arr);
+            }
+        }
+
+
+
+        Window_main.updatePhoto();
+    }
+    //פונקציה משלימה להבהרת או השחרת תמונה
+    public static int Truncate(int value) {
+
+        if (value < 0) {
+            value = 0;
+        }
+        else if (value > 255) {
+            value = 255;
+        }
+        return value;
     }
 }
 
