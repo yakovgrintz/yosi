@@ -189,7 +189,18 @@ public class Window_main extends JFrame  {
             }
         });
         JButton button5= new JButton("Show Borders");
-        JButton button6= new JButton("Eliminate Red/Green/Blue");
+        JButton button6= new JButton("Eliminate Red");
+
+        button6.addActionListener( (event) -> {
+
+            try {
+
+                Actions.ElimniateRed(scanImage2);
+
+            } catch (Exception e) {
+                System.out.println("nothing");
+            }
+        });
         JButton button7= new JButton("Negative");
         button7.addActionListener( (event) -> {
 

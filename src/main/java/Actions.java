@@ -7,7 +7,21 @@ import javax.swing.*;
 
 public class Actions  {
 
+    public static void ElimniateRed (BufferedImage img) throws Exception{
+        for (int x = 0; x< img.getWidth(); x++) {
+            for (int y = 0; y < img.getHeight(); y++) {
+                int pixel = img.getRGB(x, y);
+                Color color = new Color(pixel);
 
+                int red = color.getRed();
+                int green = color.getGreen();
+                int blue = color.getBlue();
+
+                Color newColor = new Color(0, green,blue);
+                img.setRGB(x, y, newColor.getRGB());
+            }
+        }
+    }
     //1.
 public static void ColorShiftRight (BufferedImage img) throws Exception{
     for (int x = 0; x< img.getWidth(); x++) {
