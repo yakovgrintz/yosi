@@ -13,7 +13,7 @@ import java.util.Scanner;
 
 public class Window_main extends JFrame  {
     final int SCREEN_WIDTH=900;
-    final int SCREEN_HEIGHT=900;
+    final int SCREEN_HEIGHT=800;
 
     static JPanel originImagePanel, buttonsPanel, newImagePanel;
 
@@ -25,7 +25,7 @@ public class Window_main extends JFrame  {
     static JLabel picLabel,picLabel2;
     ChromeDriver driver ;
     static BufferedImage scanImage, scanImage2;
-     static URL imageUrl;
+    static URL imageUrl;
 
 
     Window_main()  {
@@ -94,7 +94,7 @@ public class Window_main extends JFrame  {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setResizable(false);
         //פונקצייה מובנית הבונה את גודל החלון בהתאם לגודל הפנלים
-        this.setSize(900,900);
+        this.setSize(SCREEN_WIDTH,SCREEN_HEIGHT);
         this.setLayout(null);
         //נראות ומיקום החלון
         this.setVisible(true);
@@ -109,7 +109,7 @@ public class Window_main extends JFrame  {
 
 
         try {
-            Thread.sleep(5000);
+            Thread.sleep(2000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -145,38 +145,15 @@ public class Window_main extends JFrame  {
         button1.addActionListener( (event) -> {
 
             try {
-                //זה קורא לפונקציה אבל נופל שם בסוף בתהליך כתיבת הקובץ
-//                Actions.grey(imgToTest);
-//                Actions.grayScale(imgToTest);
-//                Actions.Grayscale(scanImage2);
-                  Actions.Grayscale(scanImage2);
+
+                Actions.Grayscale(scanImage2);
 
             } catch (Exception e) {
                 System.out.println("nothing");
             }
         });
         JButton button2= new JButton("Color Shift Right");
-        button2.addActionListener( (event) -> {
-
-            try {
-
-                Actions.ColorShiftRight(scanImage2);
-
-            } catch (Exception e) {
-                System.out.println("nothing");
-            }
-        });
         JButton button3= new JButton("Color Shift Left");
-        button3.addActionListener( (event) -> {
-
-            try {
-
-                Actions.ColorShiftLeft(scanImage2);
-
-            } catch (Exception e) {
-                System.out.println("nothing");
-            }
-        });
         JButton button4= new JButton("Mirror");
         button4.addActionListener( (event) -> {
 
@@ -213,8 +190,28 @@ public class Window_main extends JFrame  {
                 System.out.println("nothing");
             }
         });
-        JButton button10= new JButton("Ligher");
+        JButton button10= new JButton("Lighter");
+        button10.addActionListener( (event) -> {
+
+            try {
+
+                Actions.lighter(scanImage2);
+
+            } catch (Exception e) {
+                System.out.println("nothing");
+            }
+        });
         JButton button11= new JButton("Darker");
+        button11.addActionListener( (event) -> {
+
+            try {
+
+                Actions.darker(scanImage2);
+
+            } catch (Exception e) {
+                System.out.println("nothing");
+            }
+        });
         buttonsPanel.add(button1).setBounds(searchFacebookProfile.getX(),searchFacebookProfile.getY()+ELEMENT_HEIGHT,ELEMENT_WIDTH,ELEMENT_HEIGHT);
         buttonsPanel.add(button2).setBounds(button1.getX(),button1.getY()+ELEMENT_HEIGHT,ELEMENT_WIDTH,ELEMENT_HEIGHT);
         buttonsPanel.add(button3).setBounds(button2.getX(),button2.getY()+ELEMENT_HEIGHT,ELEMENT_WIDTH,ELEMENT_HEIGHT);
@@ -227,17 +224,10 @@ public class Window_main extends JFrame  {
         buttonsPanel.add(button10).setBounds(button9.getX(),button9.getY()+ELEMENT_HEIGHT,ELEMENT_WIDTH,ELEMENT_HEIGHT);
         buttonsPanel.add(button11).setBounds(button10.getX(),button10.getY()+ELEMENT_HEIGHT,ELEMENT_WIDTH,ELEMENT_HEIGHT);
 
-//        buttonsPanel.revalidate();
+
 
     }
-//    public static boolean enter1(){
-//        System.out.println("enter number 1");
-//        Scanner s= new Scanner(System.in);
-//        if(s.nextInt()==1){
-//            return true;
-//        }
-//        return false;
-//    }
+
 
     public static void updatePhoto() throws IOException{
         newImagePanel.removeAll();
@@ -260,7 +250,9 @@ public class Window_main extends JFrame  {
 
 
     public static void main(String[] args)  {
-        System.setProperty("webdriver.chrome.driver" , "C:\\DriverForGame\\chromedriver.exe");
+        System.setProperty(
+                "webdriver.chrome.driver",
+                "C:\\files2\\chromedriver.exe");
 
         // יצירת חלון  חדש
         new Window_main();
