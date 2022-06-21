@@ -153,7 +153,27 @@ public class Window_main extends JFrame  {
             }
         });
         JButton button2= new JButton("Color Shift Right");
+        button2.addActionListener( (event) -> {
+
+            try {
+
+                Actions.ColorShiftRight(scanImage2);
+
+            } catch (Exception e) {
+                System.out.println("nothing");
+            }
+        });
         JButton button3= new JButton("Color Shift Left");
+        button3.addActionListener( (event) -> {
+
+            try {
+
+                Actions.ColorShiftLeft(scanImage2);
+
+            } catch (Exception e) {
+                System.out.println("nothing");
+            }
+        });
         JButton button4= new JButton("Mirror");
         button4.addActionListener( (event) -> {
 
@@ -167,7 +187,6 @@ public class Window_main extends JFrame  {
         });
         JButton button5= new JButton("Show Borders");
         JButton button6= new JButton("Eliminate Red");
-
         button6.addActionListener( (event) -> {
 
             try {
@@ -178,6 +197,7 @@ public class Window_main extends JFrame  {
                 System.out.println("nothing");
             }
         });
+
         JButton button7= new JButton("Negative");
         button7.addActionListener( (event) -> {
 
