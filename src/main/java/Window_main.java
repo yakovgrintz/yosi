@@ -12,15 +12,15 @@ import java.net.URL;
 import java.util.Scanner;
 
 public class Window_main extends JFrame  {
-    final int SCREEN_WIDTH=900;
-    final int SCREEN_HEIGHT=800;
+    final static int SCREEN_WIDTH=900;
+    final static int SCREEN_HEIGHT=800;
+    static int ELEMENT_WIDTH=150;
+    static int ELEMENT_HEIGHT=50;
 
     static JPanel originImagePanel, buttonsPanel, newImagePanel;
 
     JButton searchFacebookProfile,tryButton;
     public BufferedImage image;
-    int ELEMENT_WIDTH=150;
-    int ELEMENT_HEIGHT=50;
     static ImageIcon myPicture,copyOfPicture;
     static JLabel picLabel,picLabel2;
     ChromeDriver driver ;
@@ -283,7 +283,7 @@ public class Window_main extends JFrame  {
     public static void main(String[] args)  {
         System.setProperty(
                 "webdriver.chrome.driver",
-                "C:\\files2\\chromedriver.exe");
+                "C:\\sel\\chromedriver.exe");
 
         // יצירת חלון  חדש
         new Window_main();
