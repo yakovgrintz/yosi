@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
-import javax.swing.JPanel;
+import javax.swing.*;
 
 public class ImagePanel extends JPanel{
 
@@ -15,7 +15,10 @@ public class ImagePanel extends JPanel{
         try {
             image = ImageIO.read(new File("profilePic.jpg"));
         } catch (IOException ex) {
-            // handle exception...
+            JOptionPane.showMessageDialog(new JFrame(),
+                    ex.getMessage(),
+                    "error",
+                    JOptionPane.PLAIN_MESSAGE);
         }
     }
 
