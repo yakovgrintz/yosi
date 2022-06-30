@@ -45,7 +45,7 @@ public class ButtonsPanel extends MyPanels implements SizeToApp {
         ORIGINIAL_IMAGE.setIcon(myPicture);
         ORIGINIAL_IMAGE.setBounds(ORIGINIAL_IMAGE.getX(), ORIGINIAL_IMAGE.getY(), myPicture.getIconWidth(), myPicture.getIconHeight());
         NEW_IMAGE.setIcon(copyOfPicture);
-        ORIGINIAL_IMAGE.setBounds(NEW_IMAGE.getX(), NEW_IMAGE.getY(), myPicture.getIconWidth(), myPicture.getIconHeight());
+        ORIGINIAL_IMAGE.setBounds(NEW_IMAGE.getX(), NEW_IMAGE.getY(), copyOfPicture.getIconWidth(), copyOfPicture.getIconHeight());
         repaint();
 
 
