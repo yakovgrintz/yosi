@@ -325,7 +325,7 @@ public class Actions implements SizeToApp {
                     "error",
                     JOptionPane.PLAIN_MESSAGE);
         }
-        //scanImage2= ImageIO.read(scanImage2);
+        scanImage2= ImageIO.read(ButtonsPanel.getImageUrl());
 
     }
 }
