@@ -15,11 +15,9 @@ public class ButtonsPanel extends MyPanels implements SizeToApp {
     private JButton searchFacebookProfile;
     private BufferedImage scanImage;
     private BufferedImage scanImage2;
-    private static URL imageUrl;
+    private URL imageUrl;
 
-    public static URL getImageUrl() {
-        return imageUrl;
-    }
+
 
     public ButtonsPanel(int x, Color background) {
         super(x, background);
@@ -57,8 +55,7 @@ public class ButtonsPanel extends MyPanels implements SizeToApp {
         button1.addActionListener((event) -> {
 
             try {
-
-                Actions.Grayscale(scanImage2);
+                Actions.Grayscale(copyImage(scanImage2));
 
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(new JFrame(),
@@ -72,7 +69,7 @@ public class ButtonsPanel extends MyPanels implements SizeToApp {
 
             try {
 
-                Actions.ColorShiftRight(scanImage2);
+                Actions.ColorShiftRight(copyImage(scanImage2));
 
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(new JFrame(),
@@ -86,7 +83,7 @@ public class ButtonsPanel extends MyPanels implements SizeToApp {
 
             try {
 
-                Actions.ColorShiftLeft(scanImage2);
+                Actions.ColorShiftLeft(copyImage(scanImage2));
 
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(new JFrame(),
@@ -100,7 +97,7 @@ public class ButtonsPanel extends MyPanels implements SizeToApp {
 
             try {
 
-                Actions.mirror(scanImage2);
+                Actions.mirror(copyImage(scanImage2));
 
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(new JFrame(),
@@ -114,7 +111,7 @@ public class ButtonsPanel extends MyPanels implements SizeToApp {
 
             try {
 
-                Actions.ShowBorders(scanImage2);
+                Actions.ShowBorders(copyImage(scanImage2));
 
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(new JFrame(),
@@ -128,7 +125,7 @@ public class ButtonsPanel extends MyPanels implements SizeToApp {
 
             try {
 
-                Actions.EliminateRed(scanImage2);
+                Actions.EliminateRed(copyImage(scanImage2));
 
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(new JFrame(),
@@ -143,7 +140,7 @@ public class ButtonsPanel extends MyPanels implements SizeToApp {
 
             try {
 
-                Actions.negative(scanImage2);
+                Actions.negative(copyImage(scanImage2));
 
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(new JFrame(),
@@ -157,7 +154,7 @@ public class ButtonsPanel extends MyPanels implements SizeToApp {
 
             try {
 
-                Actions.contract(scanImage2);
+                Actions.contract(copyImage(scanImage2));
 
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(new JFrame(),
@@ -171,7 +168,7 @@ public class ButtonsPanel extends MyPanels implements SizeToApp {
 
             try {
 
-                Actions.sepia(scanImage2);
+                Actions.sepia(copyImage(scanImage2));
 
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(new JFrame(),
@@ -185,7 +182,7 @@ public class ButtonsPanel extends MyPanels implements SizeToApp {
 
             try {
 
-                Actions.lighter(scanImage2);
+                Actions.lighter(copyImage(scanImage2));
 
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(new JFrame(),
@@ -199,7 +196,7 @@ public class ButtonsPanel extends MyPanels implements SizeToApp {
 
             try {
 
-                Actions.darker(scanImage2);
+                Actions.darker(copyImage(scanImage2));
 
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(new JFrame(),
@@ -235,13 +232,20 @@ public class ButtonsPanel extends MyPanels implements SizeToApp {
         // find the element of the profile photo and display it
         WebElement element = driver.findElement(By.xpath("//div[@class='b3onmgus e5nlhep0 ph5uu5jm ecm0bbzt spb7xbtv bkmhp75w emlxlaya s45kfl79 cwj9ozl2']//div[@class='q9uorilb l9j0dhe7 pzggbiyp du4w35lb']//*[name()='svg']//*[name()='g' and contains(@mask,'url(#jsc_c')]//*[name()='image' and contains(@x,'0')]"));
         String src = element.getAttribute("xlink:href");
-        imageUrl = new URL(src);
+        this.imageUrl = new URL(src);
         this.scanImage = ImageIO.read(imageUrl);
         this.scanImage2 = ImageIO.read(imageUrl);
 
         driver.quit();
         addButtons();
 
+    }
+    private BufferedImage copyImage(BufferedImage source){
+        BufferedImage b = new BufferedImage(source.getWidth(), source.getHeight(), source.getType());
+        Graphics g = b.getGraphics();
+        g.drawImage(source, 0, 0, null);
+        g.dispose();
+        return b;
     }
 
 

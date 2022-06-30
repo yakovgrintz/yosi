@@ -1,3 +1,5 @@
+import java.awt.image.BufferedImage;
+
 public interface SizeToApp {
     public  final int SCREEN_WIDTH=900;
     public  final int SCREEN_HEIGHT=800;

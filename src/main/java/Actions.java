@@ -314,7 +314,6 @@ public class Actions implements SizeToApp {
     }
 
     private static void updatePhoto(BufferedImage scanImage2) throws IOException {
-        JLabel picLabel3 = new JLabel(new ImageIcon(scanImage2));
 
 
         try {
@@ -325,7 +324,7 @@ public class Actions implements SizeToApp {
                     "error",
                     JOptionPane.PLAIN_MESSAGE);
         }
-        scanImage2= ImageIO.read(ButtonsPanel.getImageUrl());
+        //scanImage2= ImageIO.read(ButtonsPanel.getImageUrl());
 
     }
 }
